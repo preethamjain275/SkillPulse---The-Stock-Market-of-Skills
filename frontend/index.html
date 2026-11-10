@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SkillPulse – The Stock Market of Skills | Job Market Intelligence</title>
+  <meta name="description" content="College Mini-Project: Job Market Data Analytics: A Spark RDD Approach to Classification and Prediction. Understand the job market, track skill momentum, predict salaries, and build your career roadmap.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN with Custom Theme Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0f172a',
+              blue: '#2563eb',
+              sky: '#0284c7',
+              teal: '#0d9488',
+              slate: '#f8fafc',
+              border: '#e2e8f0',
+              muted: '#64748b'
+            }
+          },
+          fontFamily: {
+            sans: ['"DM Sans"', 'sans-serif'],
+            display: ['Fraunces', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
+
+  <!-- Top Notification / Status Banner -->
+  <div class="bg-slate-900 text-white text-xs px-4 py-2 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 no-print">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="font-medium text-slate-300">College Mini-Project:</span>
+      <span class="text-white font-semibold">Job Market Data Analytics: A Spark RDD Approach to Classification and Prediction</span>
+    </div>
+    <div class="flex items-center gap-3 text-slate-300">
+      <span class="hidden md:inline-flex items-center gap-1.5 bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700">
+        <svg class="w-3 h-3 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span id="banner-engine">Apache Spark RDD Engine</span>
+      </span>
+      <span id="backend-status-pill" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-950 text-emerald-300 border border-emerald-800">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        API Online
+      </span>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Tagline -->
+      <div class="flex items-center gap-3">
+        <button id="mobile-menu-toggle" class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none" aria-label="Toggle menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+
+        <a href="#overview" class="flex items-center gap-2.5 group">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-700 to-teal-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5 leading-none">
+              <span class="font-display text-xl font-bold tracking-tight text-slate-900">SkillPulse</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-200">v2.0</span>
+            </div>
+            <p class="text-[11px] text-slate-500 font-medium hidden sm:block">The Stock Market of Skills</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Quick Action Pills -->
+      <div class="flex items-center gap-2">
+        <button onclick="window.navigate('market')" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">
+          <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          Skill Stock Ticker
+        </button>
+
+        <button onclick="window.navigate('gap')" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-sm shadow-blue-600/30 transition-all">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Analyze Skill Gap
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- App Body Layout with Sidebar + Content -->
+  <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex gap-6">
+
+    <!-- Desktop Sidebar Navigation -->
+    <aside id="sidebar-nav" class="hidden lg:block w-64 shrink-0 no-print">
+      <div class="sticky top-24 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-3 space-y-1">
+        
+        <div class="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+          Core Analytics
+        </div>
+
+        <button onclick="window.navigate('overview')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="overview">
+          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Market Dashboard
+        </button>
+
+        <button onclick="window.navigate('market')" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="market">
+          <div class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            Skill Stock Market
+          </div>
+          <span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded border border-emerald-200">RISING</span>
+        </button>
+
+        <button onclick="window.navigate('classifier')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="classifier">
+          <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          Naive Bayes Classifier
+        </button>
+
+        <button onclick="window.navigate('salary')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="salary">
+          <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Salary Intelligence
+        </button>
+
+        <div class="pt-2 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+          Career Planning
+        </div>
+
+        <button onclick="window.navigate('gap')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="gap">
+          <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Skill Gap Analyzer
+        </button>
+
+        <button onclick="window.navigate('roadmap')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="roadmap">
+          <svg class="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          Career Roadmap
+        </button>
+
+        <button onclick="window.navigate('readiness')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="readiness">
+          <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          Career Readiness Score
+        </button>
+
+        <button onclick="window.navigate('jobs')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="jobs">
+          <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          Fresher-Friendly Jobs
+        </button>
+
+        <div class="pt-2 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+          Ecosystem Insights
+        </div>
+
+        <button onclick="window.navigate('companies')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="companies">
+          <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          Company Intelligence
+        </button>
+
+        <button onclick="window.navigate('locations')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="locations">
+          <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Location Hubs (India)
+        </button>
+
+        <button onclick="window.navigate('assistant')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="assistant">
+          <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+          AI Career Assistant
+        </button>
+
+        <div class="pt-2 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+          Academic & Social
+        </div>
+
+        <button onclick="window.navigate('impact')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="impact">
+          <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+          Social Impact
+        </button>
+
+        <button onclick="window.navigate('methodology')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100" data-view="methodology">
+          <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          Spark RDD Methodology
+        </button>
+
+      </div>
+    </aside>
+
+    <!-- Main Dynamic Content Container -->
+    <main class="flex-1 min-w-0" id="main-content">
+      <!-- Injected dynamically by app.js -->
+    </main>
+
+  </div>
+
+  <!-- Mobile Drawer Backdrop & Menu -->
+  <div id="mobile-drawer" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden lg:hidden">
+    <div class="fixed inset-y-0 left-0 w-72 bg-white shadow-2xl p-4 flex flex-col justify-between overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold">SP</div>
+            <span class="font-display font-bold text-lg text-slate-900">SkillPulse</span>
+          </div>
+          <button id="mobile-close-btn" class="p-1 rounded-lg text-slate-400 hover:text-slate-600" aria-label="Close menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="py-4 space-y-1" id="mobile-nav-links">
+          <!-- Cloned navigation links for mobile view -->
+        </div>
+      </div>
+      <div class="pt-4 border-t border-slate-200 text-xs text-slate-500">
+        Job Market Data Analytics Mini-Project
+      </div>
+    </div>
+  </div>
+
+  <!-- Detailed Skill Stock Modal -->
+  <div id="skill-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 overflow-y-auto max-h-[90vh]" id="skill-modal-content">
+      <!-- Populated dynamically when clicking a skill in the stock market -->
+    </div>
+  </div>
+
+  <!-- Detailed Job Posting Modal -->
+  <div id="job-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 overflow-y-auto max-h-[90vh]" id="job-modal-content">
+      <!-- Populated dynamically when clicking View Posting Details -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-auto py-8 text-xs text-slate-500 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-display font-bold text-slate-800 text-sm">SkillPulse</span>
+        <span>·</span>
+        <span>A Spark RDD Approach to Classification and Prediction</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span>Academic Mini-Project</span>
+        <span>·</span>
+        <span>Python, Apache Spark RDD, FastAPI, Tailwind CSS</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Precomputed Offline Dataset (Guarantees zero downtime even before backend starts) -->
+  <script src="data/insights.js"></script>
+  
+  <!-- Main Single-Page Reactive Engine -->
+  <script src="app.js"></script>
+</body>
+</html>

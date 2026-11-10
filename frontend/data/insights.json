@@ -1,0 +1,2449 @@
+{
+  "metadata": {
+    "total_postings": 30000,
+    "total_skills": 33,
+    "total_companies": 18,
+    "total_cities": 9,
+    "overall_avg_lpa": 18.4,
+    "highest_lpa": 98.67,
+    "model_accuracy": 67.57,
+    "macro_f1_score": 67.27,
+    "engine": "SparkRDD-Native (Zero-JVM Fault-Tolerant Engine)",
+    "partitions": 4,
+    "execution_seconds": 3.1,
+    "timestamp": "2026-11-10 00:43:15"
+  },
+  "evaluation": {
+    "accuracy": 67.57,
+    "macro_f1": 67.27,
+    "per_band_metrics": {
+      "Low": {
+        "precision": 82.6,
+        "recall": 57.19,
+        "f1_score": 67.59,
+        "support": 1287
+      },
+      "Mid": {
+        "precision": 56.18,
+        "recall": 60.46,
+        "f1_score": 58.24,
+        "support": 2218
+      },
+      "High": {
+        "precision": 72.75,
+        "recall": 79.52,
+        "f1_score": 75.98,
+        "support": 2441
+      }
+    },
+    "confusion_matrix": [
+      {
+        "actual": "High",
+        "pred": "High",
+        "count": 1941
+      },
+      {
+        "actual": "Low",
+        "pred": "Low",
+        "count": 736
+      },
+      {
+        "actual": "High",
+        "pred": "Mid",
+        "count": 500
+      },
+      {
+        "actual": "Mid",
+        "pred": "High",
+        "count": 722
+      },
+      {
+        "actual": "Mid",
+        "pred": "Mid",
+        "count": 1341
+      },
+      {
+        "actual": "Mid",
+        "pred": "Low",
+        "count": 155
+      },
+      {
+        "actual": "Low",
+        "pred": "Mid",
+        "count": 546
+      },
+      {
+        "actual": "Low",
+        "pred": "High",
+        "count": 5
+      }
+    ],
+    "bands": [
+      "Low",
+      "Mid",
+      "High"
+    ],
+    "class_distribution": {
+      "Low": 5326,
+      "High": 9820,
+      "Mid": 8908
+    },
+    "band_averages": {
+      "Low": 5.44,
+      "High": 30.56,
+      "Mid": 12.69
+    },
+    "naive_bayes_model": {
+      "class_counts": {
+        "Low": 5326,
+        "High": 9820,
+        "Mid": 8908
+      },
+      "feature_counts": {
+        "Low_sk_jquery": 439,
+        "Low_sk_selenium": 1111,
+        "Low_sk_sql": 2947,
+        "Low_lvl_intern": 2743,
+        "Low_cat_Quality Assurance": 1223,
+        "Low_mode_Hybrid": 2677,
+        "High_sk_aws": 4172,
+        "High_sk_azure": 1446,
+        "High_sk_docker": 4257,
+        "High_sk_postgresql": 657,
+        "High_sk_python": 6088,
+        "High_sk_spark": 1570,
+        "High_sk_sql": 3741,
+        "High_lvl_mid": 4160,
+        "High_cat_Data Science": 2409,
+        "High_mode_Onsite": 2131,
+        "Mid_sk_figma": 647,
+        "Mid_sk_git": 5031,
+        "Mid_sk_java": 1897,
+        "Mid_sk_kotlin": 931,
+        "Mid_sk_spring": 651,
+        "Mid_lvl_mid": 2559,
+        "Mid_cat_Software Development": 3661,
+        "Mid_mode_Hybrid": 4493,
+        "Mid_sk_aws": 2023,
+        "Mid_sk_kubernetes": 849,
+        "Mid_sk_linux": 1828,
+        "Mid_sk_python": 3774,
+        "Mid_lvl_junior": 4312,
+        "Mid_cat_Cloud Computing": 561,
+        "Mid_mode_Onsite": 1965,
+        "Low_mode_Onsite": 1166,
+        "High_sk_genai": 3447,
+        "High_sk_git": 5340,
+        "High_sk_pytorch": 2050,
+        "High_lvl_junior": 2087,
+        "High_cat_Artificial Intelligence": 2831,
+        "High_mode_Remote": 2783,
+        "Low_sk_git": 2551,
+        "Low_sk_java": 1357,
+        "Low_sk_kotlin": 666,
+        "Low_sk_spring": 346,
+        "Low_cat_Software Development": 1932,
+        "Mid_sk_azure": 817,
+        "Mid_sk_docker": 2424,
+        "Mid_cat_DevOps": 620,
+        "High_sk_langchain": 2309,
+        "High_sk_typescript": 1217,
+        "High_mode_Hybrid": 4906,
+        "High_sk_kubernetes": 2438,
+        "High_lvl_senior": 3571,
+        "Low_sk_python": 2149,
+        "Low_lvl_junior": 2087,
+        "High_cat_DevOps": 958,
+        "Low_mode_Remote": 1483,
+        "Mid_sk_selenium": 593,
+        "Mid_sk_sql": 4050,
+        "Mid_lvl_senior": 1169,
+        "Mid_cat_Quality Assurance": 663,
+        "Low_sk_javascript": 802,
+        "Low_sk_typescript": 434,
+        "High_sk_pandas": 1152,
+        "High_sk_sklearn": 1129,
+        "High_sk_tableau": 459,
+        "Mid_cat_Cybersecurity": 849,
+        "Mid_mode_Remote": 2450,
+        "Mid_sk_excel": 706,
+        "Mid_sk_postgresql": 782,
+        "Mid_cat_Business Analytics": 786,
+        "Low_sk_linux": 604,
+        "Low_cat_Cybersecurity": 286,
+        "Low_sk_excel": 966,
+        "Low_lvl_mid": 484,
+        "Low_cat_Business Analytics": 1063,
+        "Low_sk_docker": 729,
+        "Low_cat_Cloud Computing": 205,
+        "Mid_lvl_intern": 868,
+        "High_sk_tensorflow": 934,
+        "Low_sk_figma": 514,
+        "Low_sk_aws": 622,
+        "Low_sk_azure": 279,
+        "Mid_cat_Data Science": 1044,
+        "Mid_sk_genai": 939,
+        "Mid_sk_pandas": 771,
+        "Mid_sk_pytorch": 527,
+        "Mid_sk_sklearn": 491,
+        "Mid_sk_tableau": 487,
+        "High_cat_Cybersecurity": 691,
+        "High_sk_javascript": 772,
+        "High_sk_node": 907,
+        "High_cat_Software Development": 1815,
+        "Mid_sk_rust": 385,
+        "Mid_sk_spark": 618,
+        "Mid_sk_powerbi": 276,
+        "High_sk_linux": 2479,
+        "High_cat_Cloud Computing": 1080,
+        "Mid_sk_javascript": 1636,
+        "Mid_sk_node": 1409,
+        "Mid_sk_react": 1638,
+        "Mid_sk_typescript": 1117,
+        "Mid_sk_mongodb": 590,
+        "Mid_sk_jquery": 278,
+        "Mid_sk_langchain": 527,
+        "Mid_sk_tensorflow": 291,
+        "Mid_cat_Artificial Intelligence": 724,
+        "High_sk_mongodb": 508,
+        "High_sk_react": 761,
+        "Low_sk_react": 817,
+        "Low_sk_node": 576,
+        "Low_sk_powerbi": 370,
+        "Low_sk_tableau": 391,
+        "Low_sk_genai": 177,
+        "Low_sk_pandas": 510,
+        "Low_sk_pytorch": 95,
+        "Low_sk_sklearn": 143,
+        "Low_cat_Data Science": 313,
+        "Low_sk_angular": 165,
+        "Low_sk_postgresql": 516,
+        "Low_sk_mongodb": 192,
+        "Mid_sk_hadoop": 121,
+        "Low_sk_spark": 175,
+        "High_sk_java": 855,
+        "High_sk_rust": 526,
+        "High_sk_spring": 344,
+        "Mid_sk_angular": 233,
+        "High_sk_kotlin": 157,
+        "Low_cat_DevOps": 193,
+        "High_sk_excel": 23,
+        "High_cat_Business Analytics": 29,
+        "Low_sk_tensorflow": 64,
+        "High_sk_figma": 144,
+        "Low_sk_rust": 123,
+        "High_sk_angular": 46,
+        "Low_sk_kubernetes": 225,
+        "Low_sk_langchain": 66,
+        "Low_cat_Artificial Intelligence": 111,
+        "High_sk_hadoop": 201,
+        "Low_sk_hadoop": 36,
+        "High_sk_selenium": 5,
+        "High_cat_Quality Assurance": 7,
+        "High_sk_jquery": 30,
+        "Low_lvl_senior": 12,
+        "High_sk_powerbi": 14,
+        "High_lvl_intern": 2
+      }
+    }
+  },
+  "distributions": {
+    "work_mode": {
+      "Hybrid": 14990,
+      "Onsite": 6588,
+      "Remote": 8422
+    },
+    "experience": {
+      "intern": 4486,
+      "mid": 8966,
+      "junior": 10593,
+      "senior": 5955
+    },
+    "employment_type": {
+      "Internship": 8080,
+      "Full-time": 20333,
+      "Contract": 1587
+    },
+    "categories": [
+      "Quality Assurance",
+      "Data Science",
+      "Software Development",
+      "Cloud Computing",
+      "Artificial Intelligence",
+      "DevOps",
+      "Business Analytics",
+      "Cybersecurity"
+    ]
+  },
+  "skills": [
+    {
+      "name": "git",
+      "count": 16112,
+      "demand_percent": 53.71,
+      "series": [
+        54.98,
+        53.14,
+        53.39,
+        52.88,
+        53.11,
+        52.9,
+        52.55,
+        53.57,
+        55.11,
+        52.02,
+        54.16,
+        52.97,
+        56.09,
+        53.25,
+        54.31,
+        53.17,
+        54.4,
+        52.96,
+        51.45,
+        53.41,
+        56.28,
+        55.76,
+        54.01,
+        52.86
+      ],
+      "momentum": 0.06,
+      "volatility": 1.23,
+      "status": "Stable",
+      "avg_lpa": 18.88,
+      "premium": 0.48,
+      "demand_index": 100.0
+    },
+    {
+      "name": "python",
+      "count": 14917,
+      "demand_percent": 49.72,
+      "series": [
+        48.66,
+        51.71,
+        47.66,
+        51.1,
+        50.43,
+        50.08,
+        51.53,
+        49.22,
+        51.22,
+        49.73,
+        50.39,
+        49.44,
+        48.72,
+        47.47,
+        51.39,
+        49.29,
+        48.95,
+        49.7,
+        47.98,
+        52.22,
+        48.27,
+        47.9,
+        49.26,
+        51.25
+      ],
+      "momentum": -0.06,
+      "volatility": 1.4,
+      "status": "Stable",
+      "avg_lpa": 21.54,
+      "premium": 3.14,
+      "demand_index": 92.6
+    },
+    {
+      "name": "sql",
+      "count": 13357,
+      "demand_percent": 44.52,
+      "series": [
+        43.48,
+        42.57,
+        44.43,
+        43.79,
+        46.03,
+        47.6,
+        45.41,
+        45.86,
+        45.29,
+        45.01,
+        44.43,
+        45.83,
+        43.0,
+        44.43,
+        44.22,
+        45.4,
+        42.49,
+        45.07,
+        45.64,
+        45.09,
+        40.32,
+        44.39,
+        44.35,
+        44.88
+      ],
+      "momentum": -0.07,
+      "volatility": 1.46,
+      "status": "Stable",
+      "avg_lpa": 16.17,
+      "premium": -2.23,
+      "demand_index": 82.9
+    },
+    {
+      "name": "docker",
+      "count": 9244,
+      "demand_percent": 30.81,
+      "series": [
+        24.21,
+        26.61,
+        25.61,
+        27.05,
+        26.94,
+        27.28,
+        26.53,
+        27.81,
+        29.79,
+        29.93,
+        29.43,
+        32.66,
+        29.08,
+        31.11,
+        33.59,
+        31.3,
+        33.77,
+        34.14,
+        34.01,
+        36.85,
+        35.16,
+        34.06,
+        35.43,
+        35.62
+      ],
+      "momentum": 1.63,
+      "volatility": 3.71,
+      "status": "Rising",
+      "avg_lpa": 22.83,
+      "premium": 4.43,
+      "demand_index": 57.4
+    },
+    {
+      "name": "aws",
+      "count": 8475,
+      "demand_percent": 28.25,
+      "series": [
+        29.39,
+        29.31,
+        29.4,
+        27.78,
+        28.24,
+        31.01,
+        27.89,
+        27.48,
+        27.11,
+        29.4,
+        28.34,
+        27.93,
+        25.02,
+        27.51,
+        29.43,
+        26.7,
+        28.95,
+        27.54,
+        28.27,
+        28.76,
+        28.84,
+        28.59,
+        26.51,
+        28.36
+      ],
+      "momentum": -0.16,
+      "volatility": 1.23,
+      "status": "Stable",
+      "avg_lpa": 23.66,
+      "premium": 5.26,
+      "demand_index": 52.6
+    },
+    {
+      "name": "linux",
+      "count": 6081,
+      "demand_percent": 20.27,
+      "series": [
+        21.86,
+        21.84,
+        21.0,
+        20.55,
+        20.73,
+        18.08,
+        19.05,
+        19.69,
+        20.54,
+        19.95,
+        19.94,
+        19.9,
+        18.64,
+        19.65,
+        21.73,
+        19.81,
+        20.93,
+        21.17,
+        19.95,
+        21.24,
+        20.59,
+        20.88,
+        17.76,
+        20.63
+      ],
+      "momentum": -0.1,
+      "volatility": 1.09,
+      "status": "Stable",
+      "avg_lpa": 19.79,
+      "premium": 1.39,
+      "demand_index": 37.7
+    },
+    {
+      "name": "genai",
+      "count": 5685,
+      "demand_percent": 18.95,
+      "series": [
+        12.71,
+        13.74,
+        13.89,
+        14.3,
+        16.67,
+        17.74,
+        16.67,
+        16.08,
+        17.94,
+        19.8,
+        21.04,
+        21.35,
+        20.13,
+        21.73,
+        21.03,
+        21.32,
+        20.7,
+        19.8,
+        19.39,
+        21.95,
+        21.13,
+        20.66,
+        22.75,
+        21.35
+      ],
+      "momentum": 1.93,
+      "volatility": 2.99,
+      "status": "Rising",
+      "avg_lpa": 29.82,
+      "premium": 11.42,
+      "demand_index": 35.3
+    },
+    {
+      "name": "java",
+      "count": 5092,
+      "demand_percent": 16.97,
+      "series": [
+        16.19,
+        14.61,
+        18.34,
+        16.82,
+        18.13,
+        15.51,
+        19.22,
+        17.47,
+        16.72,
+        17.9,
+        17.27,
+        16.21,
+        18.97,
+        17.48,
+        14.87,
+        17.99,
+        18.37,
+        16.77,
+        16.72,
+        14.18,
+        16.5,
+        17.74,
+        17.35,
+        16.28
+      ],
+      "momentum": -0.06,
+      "volatility": 1.31,
+      "status": "Stable",
+      "avg_lpa": 12.77,
+      "premium": -5.63,
+      "demand_index": 31.6
+    },
+    {
+      "name": "kubernetes",
+      "count": 4412,
+      "demand_percent": 14.71,
+      "series": [
+        10.28,
+        10.56,
+        10.5,
+        11.7,
+        12.44,
+        14.01,
+        10.88,
+        13.45,
+        13.72,
+        15.31,
+        13.81,
+        14.93,
+        13.34,
+        16.36,
+        15.1,
+        15.53,
+        17.12,
+        16.46,
+        16.48,
+        19.18,
+        17.89,
+        16.84,
+        17.35,
+        18.69
+      ],
+      "momentum": 2.39,
+      "volatility": 2.66,
+      "status": "Rising",
+      "avg_lpa": 27.03,
+      "premium": 8.63,
+      "demand_index": 27.4
+    },
+    {
+      "name": "javascript",
+      "count": 4102,
+      "demand_percent": 13.67,
+      "series": [
+        14.01,
+        13.58,
+        12.52,
+        14.13,
+        11.05,
+        14.59,
+        11.48,
+        14.6,
+        13.39,
+        12.03,
+        13.81,
+        14.53,
+        14.33,
+        14.19,
+        14.79,
+        13.31,
+        11.75,
+        13.43,
+        15.19,
+        12.6,
+        14.26,
+        15.12,
+        14.98,
+        14.26
+      ],
+      "momentum": 0.41,
+      "volatility": 1.19,
+      "status": "Stable",
+      "avg_lpa": 13.55,
+      "premium": -4.85,
+      "demand_index": 25.5
+    },
+    {
+      "name": "react",
+      "count": 4114,
+      "demand_percent": 13.71,
+      "series": [
+        14.17,
+        13.82,
+        13.49,
+        14.95,
+        11.49,
+        14.68,
+        11.82,
+        13.7,
+        12.82,
+        12.34,
+        13.42,
+        14.37,
+        13.92,
+        14.03,
+        14.56,
+        13.23,
+        12.14,
+        13.73,
+        14.22,
+        13.39,
+        14.26,
+        15.27,
+        14.57,
+        14.5
+      ],
+      "momentum": 0.29,
+      "volatility": 0.99,
+      "status": "Stable",
+      "avg_lpa": 13.52,
+      "premium": -4.88,
+      "demand_index": 25.5
+    },
+    {
+      "name": "node",
+      "count": 3686,
+      "demand_percent": 12.29,
+      "series": [
+        12.96,
+        11.91,
+        12.36,
+        13.4,
+        11.57,
+        13.18,
+        10.97,
+        11.48,
+        12.5,
+        11.12,
+        12.09,
+        11.32,
+        12.01,
+        11.71,
+        13.1,
+        12.6,
+        11.21,
+        12.14,
+        13.49,
+        11.81,
+        12.18,
+        13.47,
+        13.09,
+        13.13
+      ],
+      "momentum": 0.2,
+      "volatility": 0.8,
+      "status": "Stable",
+      "avg_lpa": 15.3,
+      "premium": -3.1,
+      "demand_index": 22.9
+    },
+    {
+      "name": "langchain",
+      "count": 3633,
+      "demand_percent": 12.11,
+      "series": [
+        5.02,
+        6.27,
+        7.84,
+        7.72,
+        9.15,
+        10.7,
+        10.12,
+        10.5,
+        13.39,
+        14.17,
+        14.52,
+        14.29,
+        14.0,
+        13.07,
+        14.33,
+        12.44,
+        13.7,
+        12.59,
+        12.84,
+        14.26,
+        15.57,
+        13.77,
+        16.04,
+        13.38
+      ],
+      "momentum": 2.86,
+      "volatility": 2.98,
+      "status": "Rising",
+      "avg_lpa": 32.4,
+      "premium": 14.0,
+      "demand_index": 22.5
+    },
+    {
+      "name": "typescript",
+      "count": 3520,
+      "demand_percent": 11.73,
+      "series": [
+        7.94,
+        9.21,
+        8.97,
+        8.45,
+        7.77,
+        9.95,
+        10.29,
+        9.52,
+        10.31,
+        9.9,
+        9.89,
+        12.28,
+        12.18,
+        13.55,
+        13.56,
+        13.23,
+        10.35,
+        13.88,
+        14.46,
+        14.03,
+        14.8,
+        16.24,
+        15.47,
+        14.42
+      ],
+      "momentum": 2.88,
+      "volatility": 2.58,
+      "status": "Rising",
+      "avg_lpa": 19.45,
+      "premium": 1.05,
+      "demand_index": 21.8
+    },
+    {
+      "name": "pytorch",
+      "count": 3323,
+      "demand_percent": 11.08,
+      "series": [
+        8.42,
+        8.42,
+        9.21,
+        11.13,
+        10.19,
+        10.53,
+        10.12,
+        10.34,
+        12.26,
+        11.88,
+        12.64,
+        11.0,
+        9.61,
+        11.79,
+        9.86,
+        12.36,
+        12.61,
+        10.09,
+        10.9,
+        12.52,
+        11.18,
+        11.38,
+        13.26,
+        13.94
+      ],
+      "momentum": 1.25,
+      "volatility": 1.46,
+      "status": "Rising",
+      "avg_lpa": 31.15,
+      "premium": 12.75,
+      "demand_index": 20.6
+    },
+    {
+      "name": "azure",
+      "count": 3182,
+      "demand_percent": 10.61,
+      "series": [
+        10.61,
+        10.88,
+        10.02,
+        11.78,
+        11.57,
+        10.7,
+        10.37,
+        11.65,
+        10.39,
+        10.28,
+        10.83,
+        11.24,
+        9.28,
+        11.07,
+        11.09,
+        10.38,
+        9.49,
+        11.0,
+        9.45,
+        11.65,
+        10.25,
+        9.81,
+        10.64,
+        10.23
+      ],
+      "momentum": -0.28,
+      "volatility": 0.71,
+      "status": "Stable",
+      "avg_lpa": 21.79,
+      "premium": 3.39,
+      "demand_index": 19.7
+    },
+    {
+      "name": "pandas",
+      "count": 2989,
+      "demand_percent": 9.96,
+      "series": [
+        9.39,
+        9.93,
+        9.85,
+        9.67,
+        9.07,
+        10.45,
+        10.54,
+        10.17,
+        10.47,
+        9.67,
+        10.99,
+        9.79,
+        8.53,
+        10.34,
+        8.71,
+        11.25,
+        9.57,
+        10.02,
+        9.37,
+        10.94,
+        9.71,
+        9.21,
+        10.97,
+        10.56
+      ],
+      "momentum": 0.16,
+      "volatility": 0.73,
+      "status": "Stable",
+      "avg_lpa": 19.72,
+      "premium": 1.32,
+      "demand_index": 18.6
+    },
+    {
+      "name": "spark",
+      "count": 2935,
+      "demand_percent": 9.78,
+      "series": [
+        9.8,
+        10.33,
+        9.21,
+        10.07,
+        10.79,
+        11.11,
+        10.2,
+        10.75,
+        10.06,
+        9.37,
+        9.89,
+        9.31,
+        10.02,
+        10.26,
+        10.94,
+        9.83,
+        8.33,
+        9.26,
+        8.72,
+        10.38,
+        8.64,
+        9.13,
+        9.08,
+        9.59
+      ],
+      "momentum": -0.52,
+      "volatility": 0.75,
+      "status": "Stable",
+      "avg_lpa": 24.85,
+      "premium": 6.45,
+      "demand_index": 18.2
+    },
+    {
+      "name": "postgresql",
+      "count": 2437,
+      "demand_percent": 8.12,
+      "series": [
+        8.34,
+        9.53,
+        7.19,
+        8.61,
+        8.12,
+        9.29,
+        8.76,
+        7.79,
+        7.87,
+        9.22,
+        7.3,
+        7.95,
+        9.53,
+        7.3,
+        7.7,
+        7.53,
+        7.55,
+        7.89,
+        7.75,
+        7.84,
+        7.79,
+        7.63,
+        9.49,
+        7.17
+      ],
+      "momentum": -0.42,
+      "volatility": 0.78,
+      "status": "Stable",
+      "avg_lpa": 16.37,
+      "premium": -2.03,
+      "demand_index": 15.1
+    },
+    {
+      "name": "sklearn",
+      "count": 2167,
+      "demand_percent": 7.22,
+      "series": [
+        6.23,
+        7.31,
+        6.7,
+        6.99,
+        7.08,
+        7.46,
+        7.48,
+        7.63,
+        6.98,
+        7.54,
+        8.01,
+        7.14,
+        6.3,
+        7.94,
+        6.24,
+        8.8,
+        7.0,
+        6.98,
+        6.79,
+        7.13,
+        6.55,
+        7.63,
+        7.36,
+        8.06
+      ],
+      "momentum": 0.24,
+      "volatility": 0.62,
+      "status": "Stable",
+      "avg_lpa": 23.83,
+      "premium": 5.43,
+      "demand_index": 13.4
+    },
+    {
+      "name": "kotlin",
+      "count": 2141,
+      "demand_percent": 7.14,
+      "series": [
+        7.04,
+        4.77,
+        7.67,
+        7.88,
+        7.94,
+        6.63,
+        7.74,
+        6.81,
+        7.22,
+        7.24,
+        5.97,
+        5.54,
+        8.12,
+        7.38,
+        6.47,
+        8.64,
+        9.34,
+        6.68,
+        7.51,
+        6.18,
+        7.79,
+        7.26,
+        6.96,
+        6.61
+      ],
+      "momentum": 0.22,
+      "volatility": 0.99,
+      "status": "Stable",
+      "avg_lpa": 10.26,
+      "premium": -8.14,
+      "demand_index": 13.3
+    },
+    {
+      "name": "excel",
+      "count": 2102,
+      "demand_percent": 7.01,
+      "series": [
+        6.32,
+        7.86,
+        7.11,
+        7.31,
+        6.91,
+        7.21,
+        7.31,
+        6.81,
+        7.95,
+        6.78,
+        6.99,
+        7.62,
+        7.13,
+        5.85,
+        6.16,
+        6.5,
+        7.32,
+        7.59,
+        7.84,
+        8.16,
+        6.09,
+        5.76,
+        7.12,
+        6.61
+      ],
+      "momentum": -0.23,
+      "volatility": 0.66,
+      "status": "Stable",
+      "avg_lpa": 8.04,
+      "premium": -10.36,
+      "demand_index": 13.0
+    },
+    {
+      "name": "selenium",
+      "count": 2100,
+      "demand_percent": 7.0,
+      "series": [
+        6.96,
+        6.12,
+        6.38,
+        6.42,
+        6.65,
+        5.97,
+        8.16,
+        6.89,
+        6.82,
+        7.92,
+        6.59,
+        7.3,
+        7.54,
+        7.78,
+        8.01,
+        6.42,
+        6.93,
+        7.06,
+        7.67,
+        7.05,
+        7.09,
+        7.49,
+        5.81,
+        6.85
+      ],
+      "momentum": 0.26,
+      "volatility": 0.65,
+      "status": "Stable",
+      "avg_lpa": 7.19,
+      "premium": -11.21,
+      "demand_index": 13.0
+    },
+    {
+      "name": "spring",
+      "count": 1662,
+      "demand_percent": 5.54,
+      "series": [
+        6.48,
+        5.32,
+        5.49,
+        4.79,
+        5.53,
+        4.64,
+        5.87,
+        4.92,
+        5.36,
+        6.02,
+        5.34,
+        5.78,
+        5.22,
+        6.01,
+        5.32,
+        5.55,
+        6.77,
+        5.24,
+        5.98,
+        5.07,
+        5.09,
+        5.84,
+        5.89,
+        5.4
+      ],
+      "momentum": 0.14,
+      "volatility": 0.51,
+      "status": "Stable",
+      "avg_lpa": 13.98,
+      "premium": -4.42,
+      "demand_index": 10.3
+    },
+    {
+      "name": "tableau",
+      "count": 1647,
+      "demand_percent": 5.49,
+      "series": [
+        5.18,
+        5.48,
+        5.17,
+        5.36,
+        5.09,
+        6.3,
+        6.55,
+        6.23,
+        5.44,
+        4.42,
+        5.42,
+        5.78,
+        4.64,
+        5.29,
+        5.24,
+        5.86,
+        5.84,
+        4.1,
+        4.68,
+        6.58,
+        5.71,
+        4.42,
+        6.71,
+        6.53
+      ],
+      "momentum": 0.2,
+      "volatility": 0.74,
+      "status": "Stable",
+      "avg_lpa": 16.76,
+      "premium": -1.64,
+      "demand_index": 10.2
+    },
+    {
+      "name": "figma",
+      "count": 1651,
+      "demand_percent": 5.5,
+      "series": [
+        5.34,
+        5.24,
+        5.49,
+        5.12,
+        5.44,
+        5.72,
+        6.46,
+        5.25,
+        5.52,
+        5.86,
+        4.79,
+        4.25,
+        6.13,
+        6.09,
+        5.47,
+        6.02,
+        6.77,
+        5.77,
+        6.22,
+        4.04,
+        6.25,
+        5.61,
+        4.99,
+        4.19
+      ],
+      "momentum": -0.09,
+      "volatility": 0.7,
+      "status": "Stable",
+      "avg_lpa": 10.46,
+      "premium": -7.94,
+      "demand_index": 10.2
+    },
+    {
+      "name": "mongodb",
+      "count": 1621,
+      "demand_percent": 5.4,
+      "series": [
+        5.99,
+        5.72,
+        5.17,
+        5.04,
+        4.58,
+        5.8,
+        5.1,
+        4.92,
+        5.28,
+        5.41,
+        5.57,
+        5.62,
+        5.8,
+        5.45,
+        5.55,
+        5.39,
+        5.37,
+        5.31,
+        4.77,
+        5.31,
+        4.86,
+        5.84,
+        5.73,
+        6.04
+      ],
+      "momentum": 0.13,
+      "volatility": 0.39,
+      "status": "Stable",
+      "avg_lpa": 16.92,
+      "premium": -1.48,
+      "demand_index": 10.1
+    },
+    {
+      "name": "tensorflow",
+      "count": 1617,
+      "demand_percent": 5.39,
+      "series": [
+        3.97,
+        5.96,
+        4.68,
+        4.39,
+        4.84,
+        5.64,
+        5.02,
+        5.82,
+        5.6,
+        6.78,
+        6.91,
+        5.22,
+        4.97,
+        5.37,
+        5.39,
+        6.02,
+        4.98,
+        4.63,
+        5.57,
+        5.39,
+        6.01,
+        5.01,
+        5.4,
+        5.64
+      ],
+      "momentum": 0.38,
+      "volatility": 0.68,
+      "status": "Stable",
+      "avg_lpa": 28.62,
+      "premium": 10.22,
+      "demand_index": 10.0
+    },
+    {
+      "name": "rust",
+      "count": 1302,
+      "demand_percent": 4.34,
+      "series": [
+        2.43,
+        2.46,
+        3.31,
+        3.09,
+        3.02,
+        3.48,
+        4.34,
+        4.1,
+        3.65,
+        4.49,
+        4.55,
+        4.09,
+        4.72,
+        4.17,
+        3.7,
+        5.39,
+        4.75,
+        5.24,
+        5.33,
+        4.83,
+        5.17,
+        5.69,
+        6.63,
+        5.24
+      ],
+      "momentum": 3.09,
+      "volatility": 1.05,
+      "status": "Rising",
+      "avg_lpa": 19.71,
+      "premium": 1.31,
+      "demand_index": 8.1
+    },
+    {
+      "name": "jquery",
+      "count": 940,
+      "demand_percent": 3.13,
+      "series": [
+        6.07,
+        5.16,
+        4.2,
+        4.14,
+        4.15,
+        4.06,
+        3.83,
+        4.59,
+        3.49,
+        3.2,
+        2.9,
+        3.53,
+        3.65,
+        3.45,
+        2.7,
+        3.01,
+        2.1,
+        1.44,
+        2.58,
+        2.14,
+        1.23,
+        2.32,
+        1.06,
+        0.64
+      ],
+      "momentum": -5.5,
+      "volatility": 1.32,
+      "status": "Falling",
+      "avg_lpa": 8.13,
+      "premium": -10.27,
+      "demand_index": 5.8
+    },
+    {
+      "name": "powerbi",
+      "count": 821,
+      "demand_percent": 2.74,
+      "series": [
+        2.11,
+        2.94,
+        2.5,
+        3.01,
+        2.33,
+        2.99,
+        3.4,
+        2.63,
+        2.6,
+        2.74,
+        3.61,
+        3.13,
+        2.73,
+        2.65,
+        2.08,
+        2.77,
+        3.11,
+        2.88,
+        2.5,
+        3.41,
+        2.08,
+        1.8,
+        2.95,
+        2.82
+      ],
+      "momentum": -0.15,
+      "volatility": 0.45,
+      "status": "Stable",
+      "avg_lpa": 8.25,
+      "premium": -10.15,
+      "demand_index": 5.1
+    },
+    {
+      "name": "angular",
+      "count": 579,
+      "demand_percent": 1.93,
+      "series": [
+        2.67,
+        3.1,
+        2.1,
+        2.52,
+        2.16,
+        1.91,
+        1.7,
+        2.54,
+        1.95,
+        2.13,
+        2.43,
+        2.33,
+        1.99,
+        2.09,
+        1.23,
+        1.98,
+        1.48,
+        1.59,
+        1.94,
+        1.03,
+        1.62,
+        1.57,
+        1.39,
+        0.97
+      ],
+      "momentum": -3.0,
+      "volatility": 0.52,
+      "status": "Falling",
+      "avg_lpa": 10.68,
+      "premium": -7.72,
+      "demand_index": 3.6
+    },
+    {
+      "name": "hadoop",
+      "count": 450,
+      "demand_percent": 1.5,
+      "series": [
+        2.35,
+        2.22,
+        2.91,
+        2.44,
+        2.07,
+        1.74,
+        2.55,
+        2.21,
+        1.95,
+        1.75,
+        1.81,
+        1.44,
+        0.91,
+        1.68,
+        1.39,
+        0.87,
+        1.17,
+        0.91,
+        0.89,
+        0.55,
+        0.62,
+        0.67,
+        0.74,
+        0.4
+      ],
+      "momentum": -6.36,
+      "volatility": 0.73,
+      "status": "Falling",
+      "avg_lpa": 23.14,
+      "premium": 4.74,
+      "demand_index": 2.8
+    }
+  ],
+  "roles": [
+    {
+      "title": "ML Engineer",
+      "postings_count": 2293,
+      "avg_salary_lpa": 33.9,
+      "top_skills": [
+        [
+          "pytorch",
+          91.5
+        ],
+        [
+          "python",
+          90.3
+        ],
+        [
+          "git",
+          90.2
+        ],
+        [
+          "langchain",
+          79.0
+        ],
+        [
+          "genai",
+          77.1
+        ],
+        [
+          "kubernetes",
+          49.8
+        ],
+        [
+          "docker",
+          45.4
+        ],
+        [
+          "aws",
+          36.0
+        ]
+      ]
+    },
+    {
+      "title": "AI Application Developer",
+      "postings_count": 2293,
+      "avg_salary_lpa": 28.45,
+      "top_skills": [
+        [
+          "python",
+          90.3
+        ],
+        [
+          "genai",
+          90.0
+        ],
+        [
+          "git",
+          89.9
+        ],
+        [
+          "langchain",
+          79.4
+        ],
+        [
+          "typescript",
+          50.4
+        ],
+        [
+          "docker",
+          43.6
+        ],
+        [
+          "aws",
+          35.0
+        ]
+      ]
+    },
+    {
+      "title": "Data Scientist",
+      "postings_count": 2407,
+      "avg_salary_lpa": 23.97,
+      "top_skills": [
+        [
+          "sql",
+          90.6
+        ],
+        [
+          "sklearn",
+          90.0
+        ],
+        [
+          "pandas",
+          89.9
+        ],
+        [
+          "python",
+          89.6
+        ],
+        [
+          "genai",
+          77.1
+        ],
+        [
+          "pytorch",
+          50.9
+        ],
+        [
+          "spark",
+          36.2
+        ],
+        [
+          "tensorflow",
+          35.9
+        ]
+      ]
+    },
+    {
+      "title": "Data Engineer",
+      "postings_count": 2290,
+      "avg_salary_lpa": 23.94,
+      "top_skills": [
+        [
+          "sql",
+          90.3
+        ],
+        [
+          "spark",
+          90.1
+        ],
+        [
+          "python",
+          89.5
+        ],
+        [
+          "kubernetes",
+          47.8
+        ],
+        [
+          "docker",
+          45.8
+        ],
+        [
+          "azure",
+          34.8
+        ],
+        [
+          "aws",
+          33.5
+        ],
+        [
+          "postgresql",
+          33.5
+        ]
+      ]
+    },
+    {
+      "title": "Cloud Engineer",
+      "postings_count": 2287,
+      "avg_salary_lpa": 21.81,
+      "top_skills": [
+        [
+          "aws",
+          90.6
+        ],
+        [
+          "linux",
+          89.7
+        ],
+        [
+          "kubernetes",
+          50.5
+        ],
+        [
+          "docker",
+          45.9
+        ],
+        [
+          "azure",
+          36.0
+        ],
+        [
+          "python",
+          35.4
+        ]
+      ]
+    },
+    {
+      "title": "DevOps Engineer",
+      "postings_count": 2203,
+      "avg_salary_lpa": 20.83,
+      "top_skills": [
+        [
+          "linux",
+          90.7
+        ],
+        [
+          "git",
+          90.3
+        ],
+        [
+          "docker",
+          90.0
+        ],
+        [
+          "kubernetes",
+          46.2
+        ],
+        [
+          "python",
+          36.6
+        ],
+        [
+          "aws",
+          35.6
+        ],
+        [
+          "azure",
+          34.3
+        ]
+      ]
+    },
+    {
+      "title": "Backend Developer",
+      "postings_count": 2344,
+      "avg_salary_lpa": 17.46,
+      "top_skills": [
+        [
+          "sql",
+          90.9
+        ],
+        [
+          "git",
+          90.5
+        ],
+        [
+          "java",
+          90.3
+        ],
+        [
+          "rust",
+          55.5
+        ],
+        [
+          "docker",
+          45.9
+        ],
+        [
+          "spring",
+          35.3
+        ],
+        [
+          "postgresql",
+          34.9
+        ],
+        [
+          "aws",
+          34.6
+        ]
+      ]
+    },
+    {
+      "title": "Cybersecurity Analyst",
+      "postings_count": 2250,
+      "avg_salary_lpa": 16.57,
+      "top_skills": [
+        [
+          "python",
+          90.3
+        ],
+        [
+          "linux",
+          90.3
+        ],
+        [
+          "git",
+          90.0
+        ],
+        [
+          "docker",
+          45.5
+        ],
+        [
+          "azure",
+          35.7
+        ],
+        [
+          "sql",
+          33.3
+        ],
+        [
+          "aws",
+          33.2
+        ]
+      ]
+    },
+    {
+      "title": "Full Stack Developer",
+      "postings_count": 2309,
+      "avg_salary_lpa": 16.01,
+      "top_skills": [
+        [
+          "node",
+          90.3
+        ],
+        [
+          "sql",
+          90.0
+        ],
+        [
+          "react",
+          89.6
+        ],
+        [
+          "javascript",
+          89.3
+        ],
+        [
+          "typescript",
+          52.1
+        ],
+        [
+          "docker",
+          44.5
+        ],
+        [
+          "mongodb",
+          36.3
+        ],
+        [
+          "git",
+          36.1
+        ]
+      ]
+    },
+    {
+      "title": "Frontend Developer",
+      "postings_count": 2296,
+      "avg_salary_lpa": 11.09,
+      "top_skills": [
+        [
+          "git",
+          89.7
+        ],
+        [
+          "react",
+          89.0
+        ],
+        [
+          "javascript",
+          88.9
+        ],
+        [
+          "typescript",
+          50.6
+        ],
+        [
+          "figma",
+          35.8
+        ],
+        [
+          "node",
+          34.5
+        ],
+        [
+          "angular",
+          25.2
+        ],
+        [
+          "jquery",
+          20.6
+        ]
+      ]
+    },
+    {
+      "title": "Android Developer",
+      "postings_count": 2373,
+      "avg_salary_lpa": 10.2,
+      "top_skills": [
+        [
+          "java",
+          90.3
+        ],
+        [
+          "kotlin",
+          90.2
+        ],
+        [
+          "git",
+          90.1
+        ],
+        [
+          "spring",
+          35.2
+        ],
+        [
+          "figma",
+          35.0
+        ]
+      ]
+    },
+    {
+      "title": "Data Analyst",
+      "postings_count": 2330,
+      "avg_salary_lpa": 8.12,
+      "top_skills": [
+        [
+          "excel",
+          90.2
+        ],
+        [
+          "python",
+          89.5
+        ],
+        [
+          "sql",
+          89.2
+        ],
+        [
+          "postgresql",
+          36.5
+        ],
+        [
+          "pandas",
+          35.5
+        ],
+        [
+          "powerbi",
+          35.2
+        ],
+        [
+          "tableau",
+          34.4
+        ]
+      ]
+    },
+    {
+      "title": "QA Engineer",
+      "postings_count": 2325,
+      "avg_salary_lpa": 7.22,
+      "top_skills": [
+        [
+          "selenium",
+          90.3
+        ],
+        [
+          "sql",
+          89.2
+        ],
+        [
+          "python",
+          36.0
+        ],
+        [
+          "java",
+          35.7
+        ],
+        [
+          "git",
+          35.0
+        ],
+        [
+          "jquery",
+          20.1
+        ]
+      ]
+    }
+  ],
+  "companies": [
+    {
+      "company": "Swiggy",
+      "postings_count": 1715,
+      "avg_salary_lpa": 20.08,
+      "work_modes": {
+        "hybrid": 49.1,
+        "remote": 27.6,
+        "onsite": 23.3
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Tata Consultancy Services",
+      "postings_count": 1698,
+      "avg_salary_lpa": 14.87,
+      "work_modes": {
+        "hybrid": 49.5,
+        "remote": 28.5,
+        "onsite": 22.0
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Zeta Labs",
+      "postings_count": 1691,
+      "avg_salary_lpa": 19.17,
+      "work_modes": {
+        "hybrid": 49.5,
+        "remote": 27.7,
+        "onsite": 22.8
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Orbit Analytics",
+      "postings_count": 1687,
+      "avg_salary_lpa": 18.46,
+      "work_modes": {
+        "hybrid": 50.0,
+        "remote": 27.4,
+        "onsite": 22.6
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Wipro",
+      "postings_count": 1684,
+      "avg_salary_lpa": 14.58,
+      "work_modes": {
+        "hybrid": 50.1,
+        "remote": 28.7,
+        "onsite": 21.2
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Greenfield AI",
+      "postings_count": 1681,
+      "avg_salary_lpa": 20.71,
+      "work_modes": {
+        "hybrid": 49.9,
+        "remote": 27.8,
+        "onsite": 22.2
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Kaveri Systems",
+      "postings_count": 1677,
+      "avg_salary_lpa": 16.26,
+      "work_modes": {
+        "hybrid": 51.1,
+        "remote": 27.8,
+        "onsite": 21.0
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Flipkart",
+      "postings_count": 1675,
+      "avg_salary_lpa": 19.58,
+      "work_modes": {
+        "hybrid": 47.8,
+        "remote": 29.4,
+        "onsite": 22.8
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "HCL Tech",
+      "postings_count": 1673,
+      "avg_salary_lpa": 14.51,
+      "work_modes": {
+        "hybrid": 51.8,
+        "remote": 28.0,
+        "onsite": 20.2
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Pixelwave",
+      "postings_count": 1668,
+      "avg_salary_lpa": 16.7,
+      "work_modes": {
+        "hybrid": 47.5,
+        "remote": 28.8,
+        "onsite": 23.6
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Microsoft IDC",
+      "postings_count": 1667,
+      "avg_salary_lpa": 21.15,
+      "work_modes": {
+        "hybrid": 49.1,
+        "remote": 29.0,
+        "onsite": 21.9
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Zomato",
+      "postings_count": 1666,
+      "avg_salary_lpa": 19.43,
+      "work_modes": {
+        "hybrid": 50.1,
+        "remote": 28.6,
+        "onsite": 21.3
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Infosys",
+      "postings_count": 1657,
+      "avg_salary_lpa": 15.04,
+      "work_modes": {
+        "hybrid": 49.7,
+        "remote": 27.3,
+        "onsite": 23.0
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Google India",
+      "postings_count": 1654,
+      "avg_salary_lpa": 23.25,
+      "work_modes": {
+        "hybrid": 50.8,
+        "remote": 27.9,
+        "onsite": 21.3
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Amazon India",
+      "postings_count": 1640,
+      "avg_salary_lpa": 22.1,
+      "work_modes": {
+        "hybrid": 50.1,
+        "remote": 27.6,
+        "onsite": 22.3
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "BlueLoom",
+      "postings_count": 1627,
+      "avg_salary_lpa": 17.06,
+      "work_modes": {
+        "hybrid": 51.6,
+        "remote": 27.5,
+        "onsite": 21.0
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    },
+    {
+      "company": "Razorpay",
+      "postings_count": 1622,
+      "avg_salary_lpa": 19.91,
+      "work_modes": {
+        "hybrid": 50.8,
+        "remote": 29.1,
+        "onsite": 20.1
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "aws",
+        "docker"
+      ]
+    },
+    {
+      "company": "Nimbus Tech",
+      "postings_count": 1618,
+      "avg_salary_lpa": 18.39,
+      "work_modes": {
+        "hybrid": 51.1,
+        "remote": 26.4,
+        "onsite": 22.5
+      },
+      "top_skills": [
+        "git",
+        "python",
+        "sql",
+        "docker",
+        "aws"
+      ]
+    }
+  ],
+  "cities": [
+    {
+      "city": "Bengaluru",
+      "postings_count": 3296,
+      "avg_salary_lpa": 22.0
+    },
+    {
+      "city": "Mumbai",
+      "postings_count": 3396,
+      "avg_salary_lpa": 21.11
+    },
+    {
+      "city": "Delhi NCR",
+      "postings_count": 3414,
+      "avg_salary_lpa": 20.24
+    },
+    {
+      "city": "Hyderabad",
+      "postings_count": 3310,
+      "avg_salary_lpa": 19.97
+    },
+    {
+      "city": "Pune",
+      "postings_count": 3332,
+      "avg_salary_lpa": 18.59
+    },
+    {
+      "city": "Chennai",
+      "postings_count": 3360,
+      "avg_salary_lpa": 17.97
+    },
+    {
+      "city": "Kolkata",
+      "postings_count": 3362,
+      "avg_salary_lpa": 16.18
+    },
+    {
+      "city": "Mysuru",
+      "postings_count": 3292,
+      "avg_salary_lpa": 14.74
+    },
+    {
+      "city": "Kochi",
+      "postings_count": 3238,
+      "avg_salary_lpa": 14.57
+    }
+  ],
+  "skill_pairs": [
+    {
+      "skill_a": "python",
+      "skill_b": "sql",
+      "frequency": 7078
+    },
+    {
+      "skill_a": "git",
+      "skill_b": "python",
+      "frequency": 6594
+    },
+    {
+      "skill_a": "docker",
+      "skill_b": "git",
+      "frequency": 5834
+    },
+    {
+      "skill_a": "genai",
+      "skill_b": "python",
+      "frequency": 5113
+    },
+    {
+      "skill_a": "docker",
+      "skill_b": "python",
+      "frequency": 4822
+    },
+    {
+      "skill_a": "aws",
+      "skill_b": "python",
+      "frequency": 4614
+    },
+    {
+      "skill_a": "git",
+      "skill_b": "java",
+      "frequency": 4151
+    },
+    {
+      "skill_a": "git",
+      "skill_b": "sql",
+      "frequency": 4092
+    },
+    {
+      "skill_a": "aws",
+      "skill_b": "git",
+      "frequency": 3902
+    },
+    {
+      "skill_a": "aws",
+      "skill_b": "docker",
+      "frequency": 3810
+    },
+    {
+      "skill_a": "javascript",
+      "skill_b": "react",
+      "frequency": 3679
+    },
+    {
+      "skill_a": "docker",
+      "skill_b": "linux",
+      "frequency": 3644
+    },
+    {
+      "skill_a": "git",
+      "skill_b": "linux",
+      "frequency": 3641
+    },
+    {
+      "skill_a": "genai",
+      "skill_b": "git",
+      "frequency": 3450
+    },
+    {
+      "skill_a": "linux",
+      "skill_b": "python",
+      "frequency": 3282
+    },
+    {
+      "skill_a": "git",
+      "skill_b": "langchain",
+      "frequency": 3276
+    },
+    {
+      "skill_a": "langchain",
+      "skill_b": "python",
+      "frequency": 3273
+    },
+    {
+      "skill_a": "aws",
+      "skill_b": "linux",
+      "frequency": 3246
+    },
+    {
+      "skill_a": "docker",
+      "skill_b": "sql",
+      "frequency": 3183
+    },
+    {
+      "skill_a": "aws",
+      "skill_b": "sql",
+      "frequency": 3180
+    }
+  ],
+  "months": [
+    "2024-01",
+    "2024-02",
+    "2024-03",
+    "2024-04",
+    "2024-05",
+    "2024-06",
+    "2024-07",
+    "2024-08",
+    "2024-09",
+    "2024-10",
+    "2024-11",
+    "2024-12",
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12"
+  ]
+}
