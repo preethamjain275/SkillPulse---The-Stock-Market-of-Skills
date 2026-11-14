@@ -119,7 +119,7 @@ def run_pipeline(
 
     if sc is None:
         sc = SparkContext(master="local[*]", appName="SkillPulse-NativeRDD")
-        active_engine = "SparkRDD-Native (Zero-JVM Fault-Tolerant Engine)"
+        active_engine = "Apache Spark RDD Engine"
 
     # Broadcast Skills lexicon
     skills_broadcast = sc.broadcast(set(SKILLS_CANONICAL))

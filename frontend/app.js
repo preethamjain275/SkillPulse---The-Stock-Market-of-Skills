@@ -63,8 +63,9 @@
           API Online (FastAPI)
         `;
         document.getElementById('backend-status-pill').className = 'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-950 text-emerald-300 border border-emerald-800';
-        if (data.spark_engine) {
-          document.getElementById('banner-engine').textContent = data.spark_engine;
+        const be = document.getElementById('banner-engine');
+        if (be && data.spark_engine) {
+          be.textContent = data.spark_engine;
         }
       }
     } catch {
