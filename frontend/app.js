@@ -161,79 +161,388 @@
   }
 
   // Multi-Skill 24-Month Comparative SVG Chart
+  // State initialization for chart mode
+  if (!state.marketChartMode) state.marketChartMode = 'bar'; // 'bar' | 'curve' | 'momentum'
+
+  window.setMarketChartMode = function(mode) {
+    state.marketChartMode = mode;
+    renderView('market');
+  };
+
+  // Comprehensive Multi-Skill Chart Studio (Bar Chart, Area Curves, and Momentum Velocity)
   function renderMultiSkillChart() {
     const allSkills = state.insights.skills || [];
-    const compareList = (state.compareSkills || ['python', 'genai', 'rust']).map(sName => 
+    const compareList = (state.compareSkills || ['docker', 'aws', 'linux', 'genai']).map(sName => 
       allSkills.find(s => s.name.toLowerCase() === sName.toLowerCase())
     ).filter(Boolean);
 
     if (!compareList.length) return '';
 
-    const colors = ['#2563eb', '#10b981', '#9333ea', '#f59e0b'];
-    const width = 640;
-    const height = 130;
-    const maxVal = Math.max(...compareList.flatMap(s => s.series || []), 50);
+    const colors = [
+      { primary: '#2563eb', secondary: '#3b82f6', bg: 'rgba(37,99,235,0.12)', name: 'Blue' },
+      { primary: '#059669', secondary: '#10b981', bg: 'rgba(5,150,105,0.12)', name: 'Emerald' },
+      { primary: '#7c3aed', secondary: '#a855f7', bg: 'rgba(124,58,237,0.12)', name: 'Purple' },
+      { primary: '#d97706', secondary: '#f59e0b', bg: 'rgba(217,119,6,0.12)', name: 'Amber' }
+    ];
 
-    return `
-      <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs space-y-3">
-        <div class="flex items-center justify-between flex-wrap gap-2">
-          <div>
-            <h3 class="font-display text-base font-bold text-slate-900 flex items-center gap-2">
-              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
-              24-Month Multi-Skill Demand Comparative Curve
-            </h3>
-            <p class="text-[11px] text-slate-500">Track and compare monthly hiring market share percentages across technologies.</p>
+    const mode = state.marketChartMode || 'bar';
+
+    // Chart dimensions
+    const width = 760;
+    const height = 210;
+    const maxVal = Math.max(...compareList.flatMap(s => s.series || []), 45);
+
+    // 8 milestone checkpoints across the 24 months (Q1 2024 to Q4 2025)
+    const checkpoints = [
+      { idx: 0, label: "Q1 '24" },
+      { idx: 3, label: "Q2 '24" },
+      { idx: 6, label: "Q3 '24" },
+      { idx: 9, label: "Q4 '24" },
+      { idx: 12, label: "Q1 '25" },
+      { idx: 15, label: "Q2 '25" },
+      { idx: 18, label: "Q3 '25" },
+      { idx: 23, label: "Q4 '25" }
+    ];
+
+    // Compute summary metrics for the comparison selection
+    const leaderSkill = [...compareList].sort((a, b) => (b.demand_index || 0) - (a.demand_index || 0))[0];
+    const fastestGrowing = [...compareList].sort((a, b) => (b.momentum || 0) - (a.momentum || 0))[0];
+    const avgSalaryComp = (compareList.reduce((acc, s) => acc + (s.avg_lpa || 0), 0) / compareList.length).toFixed(1);
+
+    // -------------------------------------------------------------
+    // Render Mode 1: Multi-Skill Grouped Bar Chart
+    // -------------------------------------------------------------
+    function renderBarView() {
+      const groupWidth = width / checkpoints.length;
+      const numSkills = compareList.length;
+      const totalBarSpace = groupWidth * 0.72;
+      const barWidth = Math.max(7, Math.min(18, totalBarSpace / numSkills));
+      const groupPad = (groupWidth - (barWidth * numSkills)) / 2;
+
+      return `
+        <div class="relative w-full overflow-x-auto bg-slate-900 rounded-2xl p-4 border border-slate-800 text-white shadow-inner animate-fade-chart">
+          <!-- Top Value Legend & Y-Axis Reference -->
+          <div class="flex items-center justify-between text-[11px] text-slate-400 pb-2 px-1 border-b border-slate-800/80 mb-2">
+            <span class="flex items-center gap-1.5 font-medium">
+              <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+              Y-Axis: Monthly Hiring Market Share (%)
+            </span>
+            <span class="text-slate-400">X-Axis: 24-Month Quarterly Checkpoints (2024–2025)</span>
           </div>
-          <div class="flex items-center gap-2 text-xs">
+
+          <svg viewBox="0 0 ${width} ${height}" class="w-full h-56 overflow-visible">
+            <defs>
+              ${compareList.map((s, idx) => `
+                <linearGradient id="bar-grad-${idx}" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="${colors[idx % colors.length].secondary}" />
+                  <stop offset="100%" stop-color="${colors[idx % colors.length].primary}" />
+                </linearGradient>
+              `).join('')}
+            </defs>
+
+            <!-- Y-Axis Horizontal Grid Lines & Scale Labels -->
+            ${[0, 10, 20, 30, 40, 50].map(val => {
+              const y = 175 - ((val / 50) * 155);
+              return `
+                <line x1="38" y1="${y}" x2="${width}" y2="${y}" stroke="#334155" stroke-dasharray="3,3" stroke-width="0.8" />
+                <text x="32" y="${y + 3}" fill="#64748b" font-size="9" text-anchor="end" font-family="'JetBrains Mono', monospace">${val}%</text>
+              `;
+            }).join('')}
+
+            <!-- Checkpoint Groups of Vertical Bars -->
+            ${checkpoints.map((cp, cpIdx) => {
+              const groupX = 42 + (cpIdx * ((width - 50) / checkpoints.length));
+
+              return `
+                <g class="bar-group" data-quarter="${cp.label}">
+                  <!-- Subtle vertical column guide -->
+                  <rect x="${groupX}" y="20" width="${groupWidth * 0.88}" height="155" fill="rgba(255,255,255,0.015)" rx="4" />
+
+                  <!-- Grouped Bars per Skill -->
+                  ${compareList.map((s, sIdx) => {
+                    const seriesVal = (s.series && s.series[cp.idx]) ? s.series[cp.idx] : 0;
+                    const barH = Math.max(3, (seriesVal / 50) * 155);
+                    const barY = 175 - barH;
+                    const barX = groupX + groupPad + (sIdx * barWidth);
+                    const color = colors[sIdx % colors.length];
+
+                    return `
+                      <g class="chart-bar-hover group cursor-pointer">
+                        <title>${nm(s.name)} at ${cp.label}: ${seriesVal}% market share</title>
+                        <rect x="${barX.toFixed(1)}" y="${barY.toFixed(1)}" width="${(barWidth - 2).toFixed(1)}" height="${barH.toFixed(1)}" 
+                              fill="url(#bar-grad-${sIdx})" rx="2" class="animate-bar-v" />
+                        <!-- Value label on top of highest / selected bars -->
+                        ${cp.idx === 23 || cp.idx === 0 || cp.idx === 12 ? `
+                          <text x="${(barX + barWidth / 2 - 1).toFixed(1)}" y="${(barY - 3).toFixed(1)}" fill="${color.secondary}" font-size="8" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+                            ${seriesVal}%
+                          </text>
+                        ` : ''}
+                      </g>
+                    `;
+                  }).join('')}
+
+                  <!-- X-Axis Milestone Label -->
+                  <text x="${(groupX + (groupWidth * 0.44)).toFixed(1)}" y="194" fill="#94a3b8" font-size="10" font-weight="600" text-anchor="middle" font-family="'DM Sans', sans-serif">
+                    ${cp.label}
+                  </text>
+                </g>
+              `;
+            }).join('')}
+
+            <!-- Baseline X-Axis -->
+            <line x1="38" y1="175" x2="${width}" y2="175" stroke="#475569" stroke-width="1.5" />
+          </svg>
+
+          <!-- Interactive Bottom Legend with Live Checkpoint Stats -->
+          <div class="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-slate-800 text-xs">
+            <div class="flex items-center gap-3 flex-wrap">
+              ${compareList.map((s, idx) => `
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/90 border border-slate-700">
+                  <span class="w-2.5 h-2.5 rounded-sm" style="background-color: ${colors[idx % colors.length].primary}"></span>
+                  <span class="font-bold text-slate-200">${nm(s.name)}</span>
+                  <span class="font-mono text-[11px] font-semibold" style="color: ${colors[idx % colors.length].secondary}">
+                    ${s.series ? s.series[s.series.length - 1] : 0}%
+                  </span>
+                </div>
+              `).join('')}
+            </div>
+            <span class="text-[11px] text-slate-400 italic">Hover over any bar to view exact percentage</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // -------------------------------------------------------------
+    // Render Mode 2: Smooth Area & Trend Curves
+    // -------------------------------------------------------------
+    function renderCurveView() {
+      return `
+        <div class="relative w-full overflow-x-auto bg-slate-900 rounded-2xl p-4 border border-slate-800 text-white shadow-inner animate-fade-chart">
+          <!-- Top Info -->
+          <div class="flex items-center justify-between text-[11px] text-slate-400 pb-2 px-1 border-b border-slate-800/80 mb-2">
+            <span class="flex items-center gap-1.5 font-medium">
+              <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+              Continuous 24-Month Demand Density Curves (Area Shaded)
+            </span>
+            <span class="text-slate-400">Jan 2024 → Dec 2025</span>
+          </div>
+
+          <svg viewBox="0 0 ${width} ${height}" class="w-full h-56 overflow-visible">
+            <defs>
+              ${compareList.map((s, idx) => `
+                <linearGradient id="area-grad-${idx}" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="${colors[idx % colors.length].primary}" stop-opacity="0.45" />
+                  <stop offset="100%" stop-color="${colors[idx % colors.length].primary}" stop-opacity="0.02" />
+                </linearGradient>
+              `).join('')}
+            </defs>
+
+            <!-- Y-Axis Horizontal Grid Lines -->
+            ${[0, 10, 20, 30, 40, 50].map(val => {
+              const y = 175 - ((val / 50) * 155);
+              return `
+                <line x1="38" y1="${y}" x2="${width}" y2="${y}" stroke="#334155" stroke-dasharray="3,3" stroke-width="0.8" />
+                <text x="32" y="${y + 3}" fill="#64748b" font-size="9" text-anchor="end" font-family="'JetBrains Mono', monospace">${val}%</text>
+              `;
+            }).join('')}
+
+            <!-- Render Area Fills and Stroke Curves -->
+            ${compareList.map((s, sIdx) => {
+              const series = s.series || [];
+              const color = colors[sIdx % colors.length];
+              const pts = series.map((y, i) => {
+                const x = 42 + (i / (series.length - 1)) * (width - 55);
+                const py = 175 - ((y / 50) * 155);
+                return { x, py, y };
+              });
+
+              const polyPoints = pts.map(p => `${p.x.toFixed(1)},${p.py.toFixed(1)}`).join(' ');
+              const areaPoints = `${pts[0].x},175 ` + polyPoints + ` ${pts[pts.length - 1].x},175`;
+              const lastPt = pts[pts.length - 1];
+
+              return `
+                <!-- Gradient Area Fill -->
+                <polygon fill="url(#area-grad-${sIdx})" points="${areaPoints}" />
+                
+                <!-- Animated Curve Line -->
+                <polyline fill="none" stroke="${color.primary}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" points="${polyPoints}" class="animate-curve" />
+
+                <!-- Milestone dots along the curve -->
+                ${pts.filter((_, i) => i % 4 === 0 || i === series.length - 1).map(p => `
+                  <circle cx="${p.x.toFixed(1)}" cy="${p.py.toFixed(1)}" r="3" fill="#0f172a" stroke="${color.secondary}" stroke-width="2" class="cursor-pointer hover:r-5 transition-all">
+                    <title>${nm(s.name)}: ${p.y}%</title>
+                  </circle>
+                `).join('')}
+
+                <!-- Glowing Pulse Dot on Final Data Point -->
+                <circle cx="${lastPt.x.toFixed(1)}" cy="${lastPt.py.toFixed(1)}" r="5" fill="${color.secondary}" class="animate-pulse-dot" />
+                <circle cx="${lastPt.x.toFixed(1)}" cy="${lastPt.py.toFixed(1)}" r="2.5" fill="#ffffff" />
+                <text x="${(lastPt.x + 8).toFixed(1)}" y="${(lastPt.py + 3).toFixed(1)}" fill="${color.secondary}" font-size="10" font-weight="700" font-family="'JetBrains Mono', monospace">
+                  ${s.series ? s.series[s.series.length - 1] : 0}%
+                </text>
+              `;
+            }).join('')}
+
+            <!-- Baseline X-Axis -->
+            <line x1="38" y1="175" x2="${width}" y2="175" stroke="#475569" stroke-width="1.5" />
+          </svg>
+
+          <!-- X-Axis Timeline Labels -->
+          <div class="flex justify-between text-[10px] text-slate-400 font-medium pt-1 px-8">
+            <span>2024-01 (M1)</span>
+            <span>2024-06 (M6)</span>
+            <span>2024-12 (M12)</span>
+            <span>2025-06 (M18)</span>
+            <span>2025-12 (M24)</span>
+          </div>
+
+          <!-- Bottom Legend -->
+          <div class="flex items-center gap-3 flex-wrap pt-3 mt-1 border-t border-slate-800 text-xs">
             ${compareList.map((s, idx) => `
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold" style="background-color: ${colors[idx % colors.length]}15; color: ${colors[idx % colors.length]}">
-                <span class="w-2 h-2 rounded-full" style="background-color: ${colors[idx % colors.length]}"></span>
-                ${nm(s.name)} (${s.series ? s.series[s.series.length - 1] : 0}%)
-              </span>
+              <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/90 border border-slate-700">
+                <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${colors[idx % colors.length].primary}"></span>
+                <span class="font-bold text-slate-200">${nm(s.name)}</span>
+                <span class="font-mono text-[11px]" style="color: ${colors[idx % colors.length].secondary}">
+                  ${s.series ? s.series[s.series.length - 1] : 0}%
+                </span>
+              </div>
             `).join('')}
           </div>
         </div>
+      `;
+    }
 
-        <!-- SVG Graph Area -->
-        <div class="w-full overflow-x-auto bg-slate-50/70 p-3 rounded-xl border border-slate-200">
-          <svg viewBox="0 0 ${width} ${height}" class="w-full h-36 overflow-visible">
-            <!-- Grid lines -->
-            <line x1="0" y1="20" x2="${width}" y2="20" stroke="#e2e8f0" stroke-dasharray="3,3" />
-            <line x1="0" y1="65" x2="${width}" y2="65" stroke="#e2e8f0" stroke-dasharray="3,3" />
-            <line x1="0" y1="110" x2="${width}" y2="110" stroke="#e2e8f0" />
+    // -------------------------------------------------------------
+    // Render Mode 3: Momentum & Growth Velocity Ranking Bar Chart
+    // -------------------------------------------------------------
+    function renderMomentumView() {
+      const sortedByMom = [...compareList].sort((a, b) => (b.momentum || 0) - (a.momentum || 0));
 
-            <!-- Polylines for each compared skill -->
-            ${compareList.map((s, sIdx) => {
-              const series = s.series || [];
-              const pts = series.map((y, i) => {
-                const x = (i / (series.length - 1)) * width;
-                const py = 110 - ((y / maxVal) * 95);
-                return `${x.toFixed(1)},${py.toFixed(1)}`;
-              }).join(' ');
-              const color = colors[sIdx % colors.length];
+      return `
+        <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 text-white shadow-inner animate-fade-chart space-y-4">
+          <div class="flex items-center justify-between text-[11px] text-slate-400 pb-2 border-b border-slate-800">
+            <span class="font-medium text-emerald-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+              24-Month Ordinary Least Squares (OLS) Growth Momentum Slope (% / Month)
+            </span>
+            <span>Positive = Rising Market Share</span>
+          </div>
+
+          <div class="space-y-3.5 pt-1">
+            ${sortedByMom.map((s, idx) => {
+              const mom = s.momentum || 0;
+              const isPositive = mom >= 0;
+              const barWidthPct = Math.min(100, Math.max(8, (Math.abs(mom) / 4.0) * 100));
+              const barColor = isPositive ? 'bg-gradient-to-r from-emerald-600 to-teal-400' : 'bg-gradient-to-r from-rose-600 to-pink-500';
+              const statusBadge = mom > 1.2 ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : mom < -1.2 ? 'bg-rose-500/20 text-rose-300 border-rose-500/40' : 'bg-blue-500/20 text-blue-300 border-blue-500/40';
 
               return `
-                <polyline fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${pts}" />
+                <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/80 hover:border-slate-600 transition-all">
+                  <div class="flex items-center justify-between text-xs mb-1.5">
+                    <div class="flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-slate-700 font-mono text-[11px] font-bold flex items-center justify-center text-slate-300">#${idx + 1}</span>
+                      <span class="font-bold text-white text-sm">${nm(s.name)}</span>
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${statusBadge}">${s.status ? s.status.toUpperCase() : 'STABLE'}</span>
+                    </div>
+                    <div class="text-right">
+                      <span class="font-mono text-sm font-bold ${isPositive ? 'text-emerald-400' : 'text-rose-400'}">
+                        ${isPositive ? '+' : ''}${mom}% <small class="text-[10px] text-slate-400 font-normal">/ mo</small>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Animated Growth Bar -->
+                  <div class="w-full bg-slate-950/80 rounded-full h-3 p-0.5 border border-slate-700/60 overflow-hidden">
+                    <div class="${barColor} h-2 rounded-full animate-bar-h" style="width: ${barWidthPct}%"></div>
+                  </div>
+
+                  <div class="flex justify-between text-[10px] text-slate-400 mt-1.5 px-0.5">
+                    <span>Demand Index: <strong class="text-slate-200">${s.demand_index}/100</strong></span>
+                    <span>Advertised Avg: <strong class="text-slate-200">₹${s.avg_lpa} LPA</strong></span>
+                    <span>Salary Premium: <strong class="${(s.premium || 0) >= 0 ? 'text-emerald-300' : 'text-slate-400'}">${(s.premium || 0) >= 0 ? '+' : ''}₹${s.premium} LPA</strong></span>
+                  </div>
+                </div>
               `;
             }).join('')}
-          </svg>
-          <div class="flex justify-between text-[10px] text-slate-400 font-medium pt-1 px-1">
-            <span>2024-01</span>
-            <span>2024-06</span>
-            <span>2024-12</span>
-            <span>2025-06</span>
-            <span>2025-12</span>
+          </div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm space-y-4">
+        
+        <!-- Header with Title and Mode Switcher Buttons -->
+        <div class="flex items-center justify-between flex-wrap gap-4 border-b border-slate-100 pb-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200/60 mb-1.5">
+              <svg class="w-3.5 h-3.5 text-blue-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              Interactive Visualization Studio
+            </div>
+            <h3 class="font-display text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+              24-Month Multi-Skill Analytics & Market Comparison
+            </h3>
+            <p class="text-xs text-slate-500">Empirical comparison across 30,000 verified postings. Switch view formats below to explore hiring share and growth trajectories.</p>
+          </div>
+
+          <!-- Segmented View Mode Toggle Buttons -->
+          <div class="flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-semibold">
+            <button onclick="window.setMarketChartMode('bar')" class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${mode === 'bar' ? 'bg-white text-blue-700 shadow-xs font-bold border border-slate-200' : 'text-slate-600 hover:text-slate-900'}">
+              <span>📊</span>
+              <span>Bar Chart</span>
+            </button>
+            <button onclick="window.setMarketChartMode('curve')" class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${mode === 'curve' ? 'bg-white text-blue-700 shadow-xs font-bold border border-slate-200' : 'text-slate-600 hover:text-slate-900'}">
+              <span>📈</span>
+              <span>Area Trend Curve</span>
+            </button>
+            <button onclick="window.setMarketChartMode('momentum')" class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${mode === 'momentum' ? 'bg-white text-blue-700 shadow-xs font-bold border border-slate-200' : 'text-slate-600 hover:text-slate-900'}">
+              <span>⚡</span>
+              <span>Growth Velocity</span>
+            </button>
           </div>
         </div>
 
-        <!-- Toggle Quick Select Chips -->
-        <div class="flex items-center gap-1.5 flex-wrap pt-1 text-[11px]">
-          <span class="text-slate-400 font-semibold mr-1">Compare:</span>
-          ${allSkills.slice(0, 10).map(s => {
-            const isCompared = (state.compareSkills || []).includes(s.name);
+        <!-- Dynamic Chart Rendering Based on Active Mode -->
+        ${mode === 'bar' ? renderBarView() : mode === 'curve' ? renderCurveView() : renderMomentumView()}
+
+        <!-- Comparative Summary Metric Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+          <div class="p-3 rounded-2xl bg-blue-50/60 border border-blue-100">
+            <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider block">Demand Leader</span>
+            <div class="font-display text-base font-bold text-slate-900 mt-0.5">${leaderSkill ? nm(leaderSkill.name) : 'N/A'}</div>
+            <span class="text-[11px] text-blue-700 font-mono font-semibold">${leaderSkill ? leaderSkill.demand_index : 0}/100 Index</span>
+          </div>
+
+          <div class="p-3 rounded-2xl bg-emerald-50/60 border border-emerald-100">
+            <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider block">Highest Velocity</span>
+            <div class="font-display text-base font-bold text-slate-900 mt-0.5">${fastestGrowing ? nm(fastestGrowing.name) : 'N/A'}</div>
+            <span class="text-[11px] text-emerald-700 font-mono font-semibold">+${fastestGrowing ? fastestGrowing.momentum : 0}%/mo</span>
+          </div>
+
+          <div class="p-3 rounded-2xl bg-purple-50/60 border border-purple-100">
+            <span class="text-[10px] font-bold text-purple-600 uppercase tracking-wider block">Average CTC (Group)</span>
+            <div class="font-display text-base font-bold text-slate-900 mt-0.5">₹${avgSalaryComp} LPA</div>
+            <span class="text-[11px] text-purple-700 font-medium">Across Selection</span>
+          </div>
+
+          <div class="p-3 rounded-2xl bg-amber-50/60 border border-amber-100">
+            <span class="text-[10px] font-bold text-amber-600 uppercase tracking-wider block">Compared Assets</span>
+            <div class="font-display text-base font-bold text-slate-900 mt-0.5">${compareList.length} Technologies</div>
+            <span class="text-[11px] text-amber-700 font-medium">Max 4 simultaneous</span>
+          </div>
+        </div>
+
+        <!-- Quick Select Skill Chips -->
+        <div class="flex items-center gap-2 flex-wrap pt-2 border-t border-slate-100 text-xs">
+          <span class="text-slate-500 font-bold flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+            Click to Toggle Skills:
+          </span>
+          ${allSkills.slice(0, 14).map(s => {
+            const isCompared = (state.compareSkills || ['docker', 'aws', 'linux', 'genai']).includes(s.name);
             return `
-              <button onclick="window.toggleCompareSkill('${s.name}')" class="px-2 py-0.5 rounded-lg font-medium transition-colors ${isCompared ? 'bg-slate-900 text-white font-bold' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}">
-                ${nm(s.name)}
+              <button onclick="window.toggleCompareSkill('${s.name}')" class="px-2.5 py-1 rounded-xl text-xs font-semibold transition-all duration-150 ${isCompared ? 'bg-slate-900 text-white shadow-xs scale-105 border border-slate-900' : 'bg-slate-100 text-slate-700 border border-slate-200/80 hover:bg-slate-200'}">
+                ${isCompared ? '✓ ' : '+ '}${nm(s.name)}
               </button>
             `;
           }).join('')}
@@ -243,7 +552,7 @@
   }
 
   window.toggleCompareSkill = function(skillName) {
-    if (!state.compareSkills) state.compareSkills = [];
+    if (!state.compareSkills) state.compareSkills = ['docker', 'aws', 'linux', 'genai'];
     const idx = state.compareSkills.indexOf(skillName);
     if (idx >= 0) {
       if (state.compareSkills.length > 1) {
@@ -524,6 +833,103 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- Visual Analytics & Bar Chart Studio -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Chart 1: Top In-Demand Skills Bar Chart -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200/60 mb-1">
+                  Spark RDD Aggregations
+                </span>
+                <h3 class="font-display text-lg font-bold text-slate-900">Top Technical Skills by Market Demand</h3>
+                <p class="text-xs text-slate-500">Relative Demand Index (0–100) computed from 30,000 enterprise postings</p>
+              </div>
+              <button onclick="window.navigate('market')" class="text-xs font-semibold text-blue-600 hover:text-blue-800">
+                View All 33 →
+              </button>
+            </div>
+
+            <!-- Horizontal Animated Bar Chart -->
+            <div class="space-y-2.5 pt-2">
+              ${(d.skills || []).slice(0, 7).map((s, idx) => {
+                const colors = ['bg-blue-600', 'bg-teal-600', 'bg-indigo-600', 'bg-purple-600', 'bg-emerald-600', 'bg-amber-600', 'bg-rose-600'];
+                const color = colors[idx % colors.length];
+                return `
+                  <div>
+                    <div class="flex items-center justify-between text-xs mb-1">
+                      <div class="flex items-center gap-2">
+                        <span class="font-mono text-[10px] font-bold text-slate-400 w-4">#${idx + 1}</span>
+                        <span class="font-bold text-slate-800">${nm(s.name)}</span>
+                        <span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 font-mono">${s.status}</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <span class="text-slate-500 font-mono text-[11px]">${s.demand_percent || 0}% share</span>
+                        <span class="font-bold text-slate-900 font-mono text-xs">${s.demand_index}/100</span>
+                      </div>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-3 p-0.5 border border-slate-200/80 overflow-hidden">
+                      <div class="${color} h-2 rounded-full animate-bar-h transition-all" style="width: ${Math.max(8, s.demand_index)}%"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <div class="flex justify-between text-[10px] text-slate-400 font-mono pt-1 border-t border-slate-100 px-1">
+              <span>0 (Baseline)</span>
+              <span>25</span>
+              <span>50</span>
+              <span>75</span>
+              <span>100 (Max Demand)</span>
+            </div>
+          </div>
+
+          <!-- Chart 2: Tech Hub Hiring Distribution Bar Chart -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-50 text-teal-700 border border-teal-200/60 mb-1">
+                  Geographic Intelligence
+                </span>
+                <h3 class="font-display text-lg font-bold text-slate-900">Hiring Density Across Indian Tech Hubs</h3>
+                <p class="text-xs text-slate-500">Postings volume and average advertised salary (₹ LPA) by metro</p>
+              </div>
+              <button onclick="window.navigate('locations')" class="text-xs font-semibold text-teal-600 hover:text-teal-800">
+                View All Hubs →
+              </button>
+            </div>
+
+            <!-- City Hiring Bars -->
+            <div class="space-y-2.5 pt-2">
+              ${cities.slice(0, 7).map((c, idx) => {
+                const maxCity = Math.max(...cities.map(x => x.postings_count || 1));
+                const pct = Math.round((c.postings_count / maxCity) * 100);
+                return `
+                  <div>
+                    <div class="flex items-center justify-between text-xs mb-1">
+                      <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-800">${c.city}</span>
+                        <span class="text-[10px] text-slate-500">₹${c.avg_salary_lpa} LPA avg</span>
+                      </div>
+                      <span class="font-mono text-xs font-semibold text-slate-700">${(c.postings_count).toLocaleString('en-IN')} postings</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-3 p-0.5 border border-slate-200/80 overflow-hidden">
+                      <div class="bg-gradient-to-r from-teal-500 to-blue-600 h-2 rounded-full animate-bar-h" style="width: ${Math.max(6, pct)}%"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <div class="flex justify-between text-[10px] text-slate-400 font-mono pt-1 border-t border-slate-100 px-1">
+              <span>0</span>
+              <span>Relative City Hiring Volume (%)</span>
+              <span>100%</span>
+            </div>
+          </div>
         </div>
 
         <!-- Co-occurring Skill Pairs (Spark Combinations Mining) -->

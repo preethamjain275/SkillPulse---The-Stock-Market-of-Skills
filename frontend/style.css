@@ -82,3 +82,66 @@ code, pre, .font-mono {
 .badge-transition:hover {
   transform: translateY(-1px);
 }
+
+/* Advanced Chart & Graph Animations */
+@keyframes barGrowV {
+  0% { transform: scaleY(0); opacity: 0; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+.animate-bar-v {
+  transform-origin: bottom;
+  animation: barGrowV 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes barGrowH {
+  0% { transform: scaleX(0); opacity: 0; }
+  100% { transform: scaleX(1); opacity: 1; }
+}
+
+.animate-bar-h {
+  transform-origin: left;
+  animation: barGrowH 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes curveDraw {
+  0% { stroke-dashoffset: 2500; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.animate-curve {
+  stroke-dasharray: 2500;
+  stroke-dashoffset: 2500;
+  animation: curveDraw 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+.animate-pulse-dot {
+  transform-origin: center;
+  animation: pulseDot 2.2s infinite ease-in-out;
+}
+
+@keyframes fadeInChart {
+  0% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-chart {
+  animation: fadeInChart 0.5s ease-out forwards;
+}
+
+/* Chart Tooltip & Interactive Bar Hover */
+.chart-bar-hover:hover {
+  filter: brightness(1.15);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chart-bar-hover:hover rect {
+  stroke: #ffffff;
+  stroke-width: 1.5;
+}
